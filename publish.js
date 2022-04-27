@@ -129,13 +129,13 @@ exports.publish = (data, opts) => {
   const {version, name, homepage} = packageJSON
 
 
-  const templateFile = Path.resolve('./index.pug')
+  const templateFile = Path.resolve(__dirname, 'index.pug')
 
   // copy static assets
-  copyDir(Path.resolve('./images'), Path.resolve(opts.destination, 'images'))
-  copyDir(Path.resolve('./js'), Path.resolve(opts.destination, 'js'))
+  copyDir(Path.resolve(__dirname, 'images'), Path.resolve(opts.destination, 'images'))
+  copyDir(Path.resolve(__dirname, 'js'), Path.resolve(opts.destination, 'js'))
   copyDir(Path.resolve('./node_modules/ramda/dist'), Path.resolve(opts.destination, 'js'))
-  copyDir(Path.resolve('./css'), Path.resolve(opts.destination, 'css'))
+  copyDir(Path.resolve(__dirname, 'css'), Path.resolve(opts.destination, 'css'))
 
   // noinspection JSValidateTypes
   const docs = helper.prune(data)()
