@@ -7,7 +7,9 @@
     "build-styles": "./node_modules/.bin/sass ./sass/style.sass ./css/style.css",
     "generate-docs": "jsdoc --readme README.md --configure .jsdoc.json",
     "generate-docs-debug": "export ELV_RAMDOC_DEBUG=1;jsdoc --readme README.md --configure .jsdoc.json",
-    "test": "cp ./package.json ./fixtures/package.json && npm run build-styles  && jsdoc --readme ./README.md -c ./fixtures/fixtures.jsdoc.json"
+    "release": "np",
+    "test": "cp ./package.json ./fixtures/package.json && npm run build-styles  && jsdoc --readme ./README.md -c ./fixtures/fixtures.jsdoc.json",
+    "version": "npm run build-styles && npm run generate-docs && git add docs"
   },
   "homepage": "",
   "repository": {
@@ -30,6 +32,7 @@
     "jsdoc": "^3.6.10",
     "marked": "^4.0.14",
     "mocha": "^9.2.2",
+    "np": "*",
     "pug": "^3.0.2",
     "ramda": "^0.28.0",
     "rimraf": "^3.0.2",

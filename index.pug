@@ -87,7 +87,7 @@ html.docs-page(lang='en')
             )
               h2
                 a.name(tabindex='3' href=`#${doc.name}`)= doc.name
-                a.source-code-link(target="_blank" title='View source on GitHub' href=`${packageJSON.repository.url}/blob/v${packageJSON.version}/${doc.file}#${doc.lineno}`)
+                a.source-code-link(target="_blank" title='View source on GitHub' href=`${packageJSON.repository.url}/blob/v${packageJSON.version}/${doc.file}#L${doc.lineno}`)
                   img(src='./images/box-arrow-up-right.svg')
                 span.label-category-big(
                   data-category=doc.category
