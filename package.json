@@ -8,7 +8,7 @@
     "generate-docs": "jsdoc --readme README.md --configure .jsdoc.json",
     "generate-docs-debug": "export ELV_RAMDOC_DEBUG=1;jsdoc --readme README.md --configure .jsdoc.json",
     "release": "np",
-    "test": "cp ./package.json ./fixtures/package.json && npm run build-styles  && jsdoc --readme ./README.md -c ./fixtures/fixtures.jsdoc.json",
+    "test": "npm run build-styles  && jsdoc --readme ./README.md -c ./fixtures/fixtures.jsdoc.json",
     "version": "npm run build-styles && npm run generate-docs && git add docs && git commit"
   },
   "homepage": "",
