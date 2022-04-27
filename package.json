@@ -23,18 +23,20 @@
   ],
   "author": "Eluvio, Inc.",
   "license": "MIT",
-  "devDependencies": {
-    "bootstrap": "^5.1.3",
-    "chai": "^4.3.6",
-    "eslint": "^8.14.0",
+  "dependencies": {
     "fs-extra": "^10.1.0",
     "highlight.js": "^11.5.1",
     "jsdoc": "^3.6.10",
     "marked": "^4.0.14",
+    "pug": "^3.0.2",
+    "ramda": "^0.28.0"
+  },
+  "devDependencies": {
+    "bootstrap": "^5.1.3",
+    "chai": "^4.3.6",
+    "eslint": "^8.14.0",
     "mocha": "^9.2.2",
     "np": "*",
-    "pug": "^3.0.2",
-    "ramda": "^0.28.0",
     "rimraf": "^3.0.2",
     "sass": "^1.50.1"
   }

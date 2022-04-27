@@ -27,7 +27,6 @@ The following are assumed by this template and this README:
    * Configure GitHub Pages for your project
      * Go to your project's Settings → Pages screen
      * Under Source, pick the branch and the folder (`/docs`)
- * Your code is organized in a similar fashion to [Ramda](https://github.com/ramda/ramda), with one function per file.
  * You have the following files at the top level of your repo:
    * `README.md`
    * `package.json` with the following attributes:
