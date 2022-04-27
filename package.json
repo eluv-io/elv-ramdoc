@@ -1,6 +1,6 @@
 {
   "name": "@eluvio/elv-ramdoc",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "A customized version of the JSDoc template used by Ramda's API docs",
   "main": "index.js",
   "scripts": {
