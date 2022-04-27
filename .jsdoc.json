@@ -4,7 +4,7 @@
     "dictionaries": ["jsdoc"]
   },
   "source": {
-    "include": ["fixtures"],
+    "include": ["publish.js"],
     "includePattern": ".js$",
     "excludePattern": "(node_modules/|docs)"
   },
@@ -12,7 +12,7 @@
     "plugins/markdown"
   ],
   "opts": {
-    "destination": "./fixtures-docs/",
+    "destination": "./docs/",
     "encoding": "utf8",
     "pedantic": true,
     "private": true,

@@ -5,7 +5,7 @@ html.docs-page(lang='en')
     meta(name='viewport' content='width=device-width, initial-scale=1')
     link(rel='shortcut icon' href='./images/favicon.png')
     link(href='./css/style.css' rel='stylesheet')
-    title #{name} documentation
+    title #{name}
   body
     // ENTIRE BROWSER VIEW AREA
     #viewport.d-flex.flex-column.vh-100
@@ -18,7 +18,7 @@ html.docs-page(lang='en')
           ul.nav
             li.nav-link#project-name
               strong= name
-              span#version.ms-1 v#{version}
+              span#version.ms-1 v#{packageJSON.version}
             li.nav-link
               a(href='#') Home
             li.nav-link
@@ -130,6 +130,6 @@ html.docs-page(lang='en')
                 pre: code.hljs.javascript !{doc.example}
 
 
-  script(src='./js/bootstrap.bundle.js')
+  //script(src='./js/bootstrap.bundle.js')
   script(src='./js/ramda.min.js')
   script(src='./js/main.js')

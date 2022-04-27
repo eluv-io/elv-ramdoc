@@ -5,7 +5,13 @@
   "main": "index.js",
   "scripts": {
     "build-styles": "./node_modules/.bin/sass ./sass/style.sass ./css/style.css",
-    "test": "rimraf fixtures-docs && npm run build-styles  && jsdoc -c ./fixtures/fixtures.jsdoc.json"
+    "generate-docs": "jsdoc --readme README.md --configure .jsdoc.json",
+    "test": "npm run build-styles  && jsdoc --readme ./README.md -c ./fixtures/fixtures.jsdoc.json"
+  },
+  "homepage": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/@eluvio/elv-ramdoc.git"
   },
   "keywords": [
     "Eluvio",

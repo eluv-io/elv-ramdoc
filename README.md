@@ -16,24 +16,49 @@ These are the major changes:
 ```bash
 $ npm install --save-dev @eluvio/elv-ramdoc
 ```
+## Prerequisites and conventions
 
-## Usage (npm)
-In your projects `package.json` file add a new script:
+The following are assumed by this template and this README:
 
+ * Your code is hosted on [GitHub](https://github.com/)
+ * Your project's documentation is to be built in top level directory `docs`
+ * Your project has [GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages) enabled
+   * Make sure your account or organization has GitHub Pages enabled
+   * Configure GitHub Pages for your project
+     * Go to your project's Settings → Pages screen
+     * Under Source, pick the branch and the folder (`/docs`)
+ * Your code is organized in a similar fashion to [Ramda](https://github.com/ramda/ramda), with one function per file.
+ * You have the following files at the top level of your repo:
+   * `README.md`
+   * `package.json` with the following attributes:
+     * `name`
+     * `version`
+     * `homepage` set to the URL of your project's GitHub pages root
+     * `repository.url` set to the URL of your project's GitHub repo
+   * `.jsdoc.json` (see below for sample)
+
+### Example `package.json` fragment
 ```json
-"script": {
-  "generate-docs": "jsdoc -c .jsdoc.json"
+{
+  "name": "@eluvio/elv-ramdoc",
+  "version": "0.0.2",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/@eluvio/elv-ramdoc.git"
+  },
+  "homepage": "https://github.com/eluv-io/elv-ramdoc"
 }
 ```
 
-In your `.jsdoc.json` file (which should be in the top level of your project, in same directory as `package.json`), set `.opts.template` to `"node_modules/@eluvio/elv-ramdoc"`
-
-## Sample `.jsdoc.json`
-(Assumes your `.js` files are in `./src`, you want docs placed in `./docs`, and you want to include private items.)
+### Example `.jsdoc.json` file
+Assumes the following:
+ * Your `.js` files are in `src/`
+ * Your documentation files are to go in `docs/`
+ * You want to include items that have `@private` specified
 ```json
 {
   "tags": {
-    "allowUnknownTags": true,
+    "allowUnknownTags": ["category","sig"],
     "dictionaries": ["jsdoc"]
   },
   "source": {
@@ -53,8 +78,19 @@ In your `.jsdoc.json` file (which should be in the top level of your project, in
     "template": "node_modules/@eluvio/elv-ramdoc"
   }
 }
-
 ```
+
+## Usage (node.js)
+
+In your projects `package.json` file add a new script:
+
+```json
+"script": {
+  "generate-docs": "jsdoc --readme README.md --configure .jsdoc.json"
+}
+```
+
+Running this task with `npm run generate-docs` will generate your documentation.
 
 ## License
 MIT
