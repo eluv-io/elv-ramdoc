@@ -1,4 +1,4 @@
-# elv-docdash
+# elv-ramdoc
 
 This is a [JSDoc](https://jsdoc.app/) template created by customizing the [template](https://github.com/ramda/ramda.github.io) used by [Ramda's API documentation](https://ramdajs.com/docs/#). 
 
@@ -97,6 +97,14 @@ If you would like to print the data being processed, set environment variable `E
 ```json
 "script": {
   "generate-docs-debug": "export ELV_RAMDOC_DEBUG=1; jsdoc --readme README.md --configure .jsdoc.json"
+}
+```
+
+In order for the GitHub source code links to work properly, you should rebuild and commit the docs with the npm 
+`version` lifecycle hook, so that the docs will be rebuilt immediately after version number is bumped in `package.json`:
+```json
+"script": {
+  "version": "npm run generate-docs && git add docs && git commit -m 'Update docs'"
 }
 ```
 

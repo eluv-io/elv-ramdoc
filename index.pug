@@ -17,7 +17,7 @@ html.docs-page(lang='en')
         #title-container.nav.d-flex.flex-wrap.align-items-center
           ul.nav
             li.nav-link#project-name
-              strong= name
+              strong= packageJSON.name
               span#version.ms-1 v#{packageJSON.version}
             li.nav-link
               a(href='#') Home
@@ -27,7 +27,7 @@ html.docs-page(lang='en')
         #github-link-container
           ul.nav
             li.nav-link
-              a(href=repo) Github
+              a(href=packageJSON.repository.url target="_blank") Github
 
 
       #content-area.d-flex.flex-row.flex-fill.overflow-hidden
