@@ -44,7 +44,7 @@ The following are assumed by this template and this README:
   "version": "0.0.2",
   "repository": {
     "type": "git",
-    "url": "https://github.com/@eluvio/elv-ramdoc.git"
+    "url": "https://github.com/eluv-io/elv-ramdoc"
   },
   "homepage": "https://github.com/eluv-io/elv-ramdoc"
 }
@@ -91,6 +91,14 @@ In your projects `package.json` file add a new script:
 ```
 
 Running this task with `npm run generate-docs` will generate your documentation.
+
+If you would like to print the data being processed, set environment variable `ELV_RAMDOC_DEBUG`:
+
+```json
+"script": {
+  "generate-docs-debug": "export ELV_RAMDOC_DEBUG=1; jsdoc --readme README.md --configure .jsdoc.json"
+}
+```
 
 ## License
 MIT

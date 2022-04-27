@@ -1,4 +1,4 @@
-const DEBUG_MODE=false
+const ELV_RAMDOC_DEBUG = process.env.ELV_RAMDOC_DEBUG
 
 const fs = require('fs-extra')
 const Path = require('path') // can't use lower-case 'path' because of name collision with ramda
@@ -47,12 +47,14 @@ const pug = require('pug')
  */
 const _copyDir = (sourceDir, destDir) => {
   // create dir if it doesn't exist
-  if (!fs.existsSync(destDir)) fs.mkdirSync(destDir, { recursive: true })
+  if (!fs.existsSync(destDir)) fs.mkdirSync(destDir, {recursive: true})
   // copy contents
   fs.copy(
     sourceDir,
     destDir,
-    err => {if (err) throw Error(err)}
+    err => {
+      if (err) throw Error(err)
+    }
   )
 }
 
@@ -203,7 +205,7 @@ const _valueProp = chain(prop('value'))
  * @category Array
  * @private
  * @sig [Object] -> [Object]
- * @param {Object[]} - Array (or iterable) of objects from JSDoc
+ * @param {Object[]} - Array of objects from JSDoc
  * @returns {Object[]} Array of objects tailored for our pug template
  *
  */
@@ -233,6 +235,8 @@ const _simplifyData = applySpec({                    // REMAP: create a new obje
     defaultTo(['']),
     _prettifyCode
   ),
+  file: path(['meta', 'filename']),                    // create 'file' attribute
+  lineno: path(['meta', 'lineno']),                  // create 'lineno' attribute
   name: pipe(                                          // create 'name' attribute
     prop('name'),
     defaultTo('')
@@ -290,53 +294,76 @@ const _simplifyData = applySpec({                    // REMAP: create a new obje
  * @since v0.0.1
  * @category File
  * @sig ([Object], Object) -> undefined
- * @param {Object[]} data - Array (or iterable) of objects passed in by JSDoc
+ * @param {Object[]} data - [TaffyDB database](https://taffydb.com) passed in by JSDoc
  * @param {Object} opts - Options info passed in by JSDoc
  * @returns {undefined}
  *
  */
 exports.publish = (data, opts) => {
-  if(!opts.destination.includes('docs')) throw Error('Expected to find "docs" in the destination path. This is a safety check to try to prevent accidental emptying of the wrong directory.')
+  if (!opts.destination.includes('docs')) throw Error('Expected to find "docs" in the destination path. This is a safety check to try to prevent accidental emptying of the wrong directory.')
 
   // delete any previous files
   fs.emptyDirSync(Path.resolve(opts.destination))
 
-  if(DEBUG_MODE) {
-    const dataAsArray = data().get()
+  // copy static assets
+  _copyDir(Path.resolve(__dirname, 'images'), Path.resolve(opts.destination, 'images'))
+  _copyDir(Path.resolve(__dirname, 'js'), Path.resolve(opts.destination, 'js'))
+  _copyDir(Path.resolve('./node_modules/ramda/dist'), Path.resolve(opts.destination, 'js'))
+  _copyDir(Path.resolve(__dirname, 'css'), Path.resolve(opts.destination, 'css'))
+
+  if (ELV_RAMDOC_DEBUG) {
     console.log('---------')
     console.log('raw data:')
     console.log('---------')
-    console.log(JSON.stringify(dataAsArray,null,2))
+    console.log(JSON.stringify(data().get(), null, 2))
     console.log()
     console.log('---------')
     console.log('opts:')
     console.log('---------')
-    console.log(JSON.stringify(opts,null,2))
+    console.log(JSON.stringify(opts, null, 2))
   }
 
-  const packageJsonPath = Path.join(Path.dirname(Path.resolve(opts.configure)),'package.json')
-  const packageJSON =  require(packageJsonPath)
+  const packageJsonPath = Path.join(Path.dirname(Path.resolve(opts.configure)), 'package.json')
+  const packageJSON = require(packageJsonPath)
 
   const templateFile = Path.resolve(__dirname, 'index.pug')
 
-  // noinspection JSValidateTypes
-  const docs = helper.prune(data)()
-    .order('name, version, since')
-    .filter({kind: ['function', 'constant', 'class']})
-    .get()
-    .filter(x => opts.private || (x.access !== 'private'))
-    .map(_simplifyData)
+  const prunedData = helper.prune(data)()
+  if (ELV_RAMDOC_DEBUG) {
+    console.log('---------')
+    console.log('pruned data:')
+    console.log('---------')
+    console.log(JSON.stringify(prunedData.get(), null, 2))
+    console.log()
+  }
 
-  if(DEBUG_MODE) {
+  const filteredData = prunedData
+    .order('name')
+    .filter({kind: ['function', 'constant', 'class']})
+    .get()  // convert to array of objects
+    .filter(x => opts.private || (x.access !== 'private')) // filter out private items if opts.private is false
+
+
+  // noinspection JSValidateTypes
+  const docs = filteredData.map(_simplifyData) // tailor for our template
+  if (ELV_RAMDOC_DEBUG) {
+    console.log('---------')
+    console.log('filtered data:')
+    console.log('---------')
+    console.log(JSON.stringify(filteredData, null, 2))
+    console.log()
+  }
+
+  if (ELV_RAMDOC_DEBUG) {
     console.log('---------')
     console.log('filtered and reprocessed docs:')
     console.log('---------')
-    console.log(JSON.stringify(docs,null,2))
+    console.log(JSON.stringify(docs, null, 2))
     console.log()
     console.log('---------')
     console.log('packageJSON:')
     console.log('---------')
-    console.log(JSON.stringify(packageJSON,null,2))
+    console.log(JSON.stringify(packageJSON, null, 2))
     console.log()
   }
 
@@ -347,15 +374,6 @@ exports.publish = (data, opts) => {
   }
 
   const outputContent = pug.renderFile(templateFile, context)
-
   const outputFile = Path.resolve(opts.destination, 'index.html')
-
   fs.writeFileSync(outputFile, outputContent, {encoding: 'utf8'})
-
-  // copy static assets
-  _copyDir(Path.resolve(__dirname, 'images'), Path.resolve(opts.destination, 'images'))
-  _copyDir(Path.resolve(__dirname, 'js'), Path.resolve(opts.destination, 'js'))
-  _copyDir(Path.resolve('./node_modules/ramda/dist'), Path.resolve(opts.destination, 'js'))
-  _copyDir(Path.resolve(__dirname, 'css'), Path.resolve(opts.destination, 'css'))
-
 }

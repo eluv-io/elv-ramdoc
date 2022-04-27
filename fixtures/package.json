@@ -1,11 +1,18 @@
 {
   "name": "@eluvio/elv-ramdoc",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A customized version of the JSDoc template used by Ramda's API docs",
   "main": "index.js",
   "scripts": {
     "build-styles": "./node_modules/.bin/sass ./sass/style.sass ./css/style.css",
-    "test": "rimraf fixtures-docs && npm run build-styles  && jsdoc -c ./fixtures/fixtures.jsdoc.json"
+    "generate-docs": "jsdoc --readme README.md --configure .jsdoc.json",
+    "generate-docs-debug": "export ELV_RAMDOC_DEBUG=1;jsdoc --readme README.md --configure .jsdoc.json",
+    "test": "cp ./package.json ./fixtures/package.json && npm run build-styles  && jsdoc --readme ./README.md -c ./fixtures/fixtures.jsdoc.json"
+  },
+  "homepage": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/eluv-io/elv-ramdoc"
   },
   "keywords": [
     "Eluvio",

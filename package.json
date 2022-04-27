@@ -6,12 +6,13 @@
   "scripts": {
     "build-styles": "./node_modules/.bin/sass ./sass/style.sass ./css/style.css",
     "generate-docs": "jsdoc --readme README.md --configure .jsdoc.json",
-    "test": "npm run build-styles  && jsdoc --readme ./README.md -c ./fixtures/fixtures.jsdoc.json"
+    "generate-docs-debug": "export ELV_RAMDOC_DEBUG=1;jsdoc --readme README.md --configure .jsdoc.json",
+    "test": "cp ./package.json ./fixtures/package.json && npm run build-styles  && jsdoc --readme ./README.md -c ./fixtures/fixtures.jsdoc.json"
   },
   "homepage": "",
   "repository": {
     "type": "git",
-    "url": "https://github.com/@eluvio/elv-ramdoc.git"
+    "url": "https://github.com/eluv-io/elv-ramdoc"
   },
   "keywords": [
     "Eluvio",
