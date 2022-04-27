@@ -23,7 +23,7 @@
   ],
   "author": "Eluvio, Inc.",
   "license": "MIT",
-  "dependencies": {
+  "peerDependencies": {
     "fs-extra": "^10.1.0",
     "highlight.js": "^11.5.1",
     "jsdoc": "^3.6.10",
