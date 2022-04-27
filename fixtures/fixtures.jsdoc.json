@@ -1,0 +1,22 @@
+{
+  "tags": {
+    "allowUnknownTags": true,
+    "dictionaries": ["jsdoc"]
+  },
+  "source": {
+    "include": ["fixtures"],
+    "includePattern": ".js$",
+    "excludePattern": "(node_modules/|docs)"
+  },
+  "plugins": [
+    "plugins/markdown"
+  ],
+  "opts": {
+    "destination": "./fixtures-docs/",
+    "encoding": "utf8",
+    "pedantic": true,
+    "private": true,
+    "recurse": true,
+    "template": "."
+  }
+}
