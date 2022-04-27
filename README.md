@@ -21,6 +21,7 @@ $ npm install --save-dev @eluvio/elv-ramdoc
 The following are assumed by this template and this README:
 
  * Your code is hosted on [GitHub](https://github.com/)
+ * Your project's repo has version tags (e.g.`v0.0.1`)
  * Your project's documentation is to be built in top level directory `docs`
  * Your project has [GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages) enabled
    * Make sure your account or organization has GitHub Pages enabled

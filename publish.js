@@ -197,19 +197,19 @@ const _titleFilter = pipe(propEq('title'), filter)
 const _valueProp = chain(prop('value'))
 
 /**
- * Converts an array of JSDoc data objects to an array of objects tailored for our
+ * Returns a function that converts an array of JSDoc data objects to an array of objects tailored for our
  * [pug](https://pugjs.org/api/getting-started.html) template.
  *
  * @function
  * @since v0.0.1
  * @category Array
  * @private
- * @sig [Object] -> [Object]
- * @param {Object[]} - Array of objects from JSDoc
- * @returns {Object[]} Array of objects tailored for our pug template
+ * @sig String -> ([Object] -> [Object])
+ * @param {String} baseDir - base directory of project
+ * @returns {Function} Function that accepts and array of objects and returns an array of new objects
  *
  */
-const _simplifyData = applySpec({                    // REMAP: create a new object by slicing and dicing input object
+const _simplifyData = baseDir => applySpec({                    // REMAP: create a new object by slicing and dicing input object
   access: pipe(                                        // create 'access' attribute containing 'public' or 'private'
     prop('access'),
     defaultTo('public')
@@ -235,8 +235,17 @@ const _simplifyData = applySpec({                    // REMAP: create a new obje
     defaultTo(['']),
     _prettifyCode
   ),
-  file: path(['meta', 'filename']),                    // create 'file' attribute
-  lineno: path(['meta', 'lineno']),                  // create 'lineno' attribute
+  filePath: x => Path.resolve(                         // create 'filePath' attribute
+    '/',
+    Path.relative(
+      baseDir,
+      Path.join(
+        path(['meta', 'path'], x),
+        path(['meta', 'filename'], x)
+      )
+    )
+  ),
+  lineno: path(['meta', 'lineno']),                    // create 'lineno' attribute
   name: pipe(                                          // create 'name' attribute
     prop('name'),
     defaultTo('')
@@ -287,6 +296,8 @@ const _simplifyData = applySpec({                    // REMAP: create a new obje
   )
 })
 
+//TODO: add pre-check for needed info in package.json
+
 /**
  * Empties target directory specified in `opts.destination` then populates with documentation files generated from `data`
  *
@@ -300,6 +311,11 @@ const _simplifyData = applySpec({                    // REMAP: create a new obje
  *
  */
 exports.publish = (data, opts) => {
+  const baseDir = Path.dirname(Path.resolve(opts.configure))
+  const packageJsonPath = Path.join(baseDir, 'package.json')
+  const packageJSON = require(packageJsonPath)
+  if (!path(['repository', 'url'], packageJSON)) throw Error('.repository.url not found in package.json')
+
   if (!opts.destination.includes('docs')) throw Error('Expected to find "docs" in the destination path. This is a safety check to try to prevent accidental emptying of the wrong directory.')
 
   // delete any previous files
@@ -323,8 +339,6 @@ exports.publish = (data, opts) => {
     console.log(JSON.stringify(opts, null, 2))
   }
 
-  const packageJsonPath = Path.join(Path.dirname(Path.resolve(opts.configure)), 'package.json')
-  const packageJSON = require(packageJsonPath)
 
   const templateFile = Path.resolve(__dirname, 'index.pug')
 
@@ -345,7 +359,7 @@ exports.publish = (data, opts) => {
 
 
   // noinspection JSValidateTypes
-  const docs = filteredData.map(_simplifyData) // tailor for our template
+  const docs = filteredData.map(_simplifyData(baseDir)) // tailor for our template
   if (ELV_RAMDOC_DEBUG) {
     console.log('---------')
     console.log('filtered data:')
@@ -368,6 +382,7 @@ exports.publish = (data, opts) => {
   }
 
   const context = {
+    baseDir,
     docs,
     opts,
     packageJSON
