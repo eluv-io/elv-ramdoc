@@ -37,6 +37,13 @@ The following are assumed by this template and this README:
      * `repository.url` set to the URL of your project's GitHub repo
    * `.jsdoc.json` (see below for sample)
 
+NOTE: You should put a link to the API documentation in your README file that connects to GitHub pages, e.g.:
+```markdown
+## API Documentation
+
+[https://eluv-io.github.io/elv-ramdoc/](https://eluv-io.github.io/elv-ramdoc/)
+```
+
 ### Example `package.json` fragment
 ```json
 {
@@ -107,6 +114,9 @@ In order for the GitHub source code links to work properly, you should rebuild a
   "version": "npm run generate-docs && git add docs && git commit -m 'Update docs'"
 }
 ```
+## API Documentation
+
+[https://eluv-io.github.io/elv-ramdoc/](https://eluv-io.github.io/elv-ramdoc/)
 
 ## License
 MIT

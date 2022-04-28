@@ -9,6 +9,7 @@ $gray-100: #f8f9fa
 
 $nav-link-color: mix($primary, white, 20%)
 $nav-link-hover-color: white
+$nav-tabs-link-active-bg: mix($primary, black, 80%)
 
 $font-family-sans-serif: "Helvetica Neue", Helvetica, Arial, sans-serif
 $font-family-monospace: Menlo, Monaco, Consolas, monospace
@@ -50,13 +51,31 @@ $category-bg-color: mix($primary, $gray-100, 15%)
 
 #header-row
   background-color: $primary
-  padding: $spacer * .5
+  padding-left: $spacer * .5
+  padding-top: 0
+  padding-bottom: 0
   height: $header-height
 
 #header-row *
   font-size: $font-size-base * 1.25
   color: $nav-link-color
   text-decoration: none
+
+#header-row .nav-link
+  padding-top: 0
+  padding-bottom: 0
+
+#header-row li.nav-link
+  vertical-align: center
+  line-height: calc($header-height - 2px)
+  height: calc($header-height - 2px)
+
+.active-header-tab
+  background-color: $nav-tabs-link-active-bg
+
+
+#title-container
+  height: $header-height
 
 #header-row .nav-link a:hover
   color: $nav-link-hover-color
@@ -68,146 +87,165 @@ $category-bg-color: mix($primary, $gray-100, 15%)
   padding-left: $spacer * 0.5
   color: white
 
+#readme-container
+  margin-top: $header-height
+  padding: $spacer
+  background-color: $light-grey
+
+#readme
+  background-color: white
+  padding: $spacer * 2
+  border: 1px solid darkgrey
+  border-radius: $border-radius
+  max-width: 80em
+
+  pre
+    @include inline-code
+    padding: $spacer
+    margin-left: $spacer
+    margin-right: $spacer
+
+  code
+    @include inline-code
+
 #content-area
   margin-top: $header-height
 
-#sidebar
-  background-color: $lightest-grey
+  #sidebar
+    background-color: $lightest-grey
 
-#sidebar *
-  font-family: $font-family-monospace
+  #sidebar *
+    font-family: $font-family-monospace
 
-#filter-controls
-  background-color: $lighter-grey
+  #filter-controls
+    background-color: $lighter-grey
 
-#filter-text
-  border: none
-  outline: none
-  width: calc(100% - 5em)
+  #filter-text
+    border: none
+    outline: none
+    width: calc(100% - 5em)
 
-#search-icon
-  position: relative
-  top: $spacer * 0.2
-  display: inline-block
-  font-style: normal
-  font-weight: 400
-  line-height: 1
-  float: right !important
+  #search-icon
+    position: relative
+    top: $spacer * 0.2
+    display: inline-block
+    font-style: normal
+    font-weight: 400
+    line-height: 1
+    float: right !important
 
-#clear-filter-icon
-  margin-left: $spacer * .5
-  float: right !important
-  cursor: pointer
+  #clear-filter-icon
+    margin-left: $spacer * .5
+    float: right !important
+    cursor: pointer
 
-#toc
-  padding-top: $spacer * .75
-  min-height: 1em
-  overflow-y: auto
-  width: 25em
+  #toc
+    padding-top: $spacer * .75
+    min-height: 1em
+    overflow-y: auto
+    width: 25em
 
-#toc li
-  padding-top: $spacer * .25
-  padding-bottom: $spacer * .25
-  padding-left: $spacer * .5
-  cursor: pointer
+  #toc li
+    padding-top: $spacer * .25
+    padding-bottom: $spacer * .25
+    padding-left: $spacer * .5
+    cursor: pointer
 
-#toc a
-  color: $primary
-  text-decoration: none
-  width: 100%
+  #toc a
+    color: $primary
+    text-decoration: none
+    width: 100%
 
-.label-category
-  @include category
-  border-radius: $border-radius
-  margin-right: $spacer * .5
-  margin-top: $spacer * .2
-  padding-left: $spacer * .4
-  padding-right: $spacer * .4
+  .label-category
+    @include category
+    border-radius: $border-radius
+    margin-right: $spacer * .5
+    margin-top: $spacer * .2
+    padding-left: $spacer * .4
+    padding-right: $spacer * .4
 
-.label-category-big
-  @include category
-  border-radius: $border-radius * 2
-  padding: $spacer * .5 $spacer
+  .label-category-big
+    @include category
+    border-radius: $border-radius * 2
+    padding: $spacer * .5 $spacer
 
 
-#detail-entries
-  background-color: $light-grey
-  padding-left: $spacer
-  padding-right: $spacer
-  padding-bottom: $spacer
+  #detail-entries
+    background-color: $light-grey
+    padding-left: $spacer
+    padding-right: $spacer
+    padding-bottom: $spacer
 
-.card
-  margin-bottom: $spacer
-  margin-top: $spacer
-  padding-left: $spacer
-  padding-right: $spacer
-  padding-top: $spacer
-  border-radius: $spacer * 0.5
+  .card
+    margin-bottom: $spacer
+    margin-top: $spacer
+    padding-left: $spacer
+    padding-right: $spacer
+    padding-top: $spacer
+    border-radius: $spacer * 0.5
 
-.card a
-  text-decoration: none
+  .card a
+    text-decoration: none
 
-.card h2 a
-  color: black
+  .card h2 a
+    color: black
 
-.source-code-link
-  float: right !important
-  margin-left: $spacer * .5
+  .source-code-link
+    float: right !important
+    margin-left: $spacer * .5
 
-.description code
-  @include inline-code
+  .description code
+    @include inline-code
 
-.sig-container
-  margin-bottom: $spacer * .25
+  .sig-container
+    margin-bottom: $spacer * .25
 
-code.sig
-  @include inline-code
+  code.sig
+    @include inline-code
 
-.param-name
-  @include inline-code
+  .param-name
+    @include inline-code
 
-.params .toggle-params
-  font-size: 80%
-  text-transform: uppercase
+  .params .toggle-params
+    font-size: 80%
+    text-transform: uppercase
 
-.params[data-expanded="false"] > .toggle-params::before
-  content: "Expand "
+  .params[data-expanded="false"] > .toggle-params::before
+    content: "Expand "
 
-.params[data-expanded="true"] > .toggle-params::before
-  content: "Collapse "
+  .params[data-expanded="true"] > .toggle-params::before
+    content: "Collapse "
 
-.params[data-expanded="false"] > .details
-  display: none
+  .params[data-expanded="false"] > .details
+    display: none
 
-.params[data-expanded="true"] > .details
-  display: block
+  .params[data-expanded="true"] > .details
+    display: block
 
-span.description p
-  margin-bottom: 0
+  span.description p
+    margin-bottom: 0
 
-.hljs-comment
-  color: #de6
+  .hljs-comment
+    color: #de6
 
-.hljs-keyword
-  color: #fff
-  font-weight: bold
+  .hljs-keyword
+    color: #fff
+    font-weight: bold
 
-.hljs-regexp,
-.hljs-string,
-.hljs-number
-  color: #fc9
+  .hljs-regexp,
+  .hljs-string,
+  .hljs-number
+    color: #fc9
 
-pre,
-.hljs
-  background: #333
-  color: #ccc
+  pre,
+  .hljs
+    background: #333
+    color: #ccc
 
-pre
-  border: 0
-  border-radius: 0
-  margin-bottom: -$spacer
-  margin-left: -$spacer
-  margin-right: -$spacer
-  padding: $spacer
-  border-bottom-left-radius: $spacer * .5
-  border-bottom-right-radius: $spacer * .5
+  pre
+    border: 0
+    margin-bottom: -$spacer
+    margin-left: -$spacer
+    margin-right: -$spacer
+    padding: $spacer
+    border-radius: 0 0 $spacer * .5 $spacer * .5

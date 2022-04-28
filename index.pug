@@ -11,26 +11,28 @@ html.docs-page(lang='en')
     #viewport.d-flex.flex-column.vh-100
 
       // PAGE HEADER
-      #header-row.d-flex.flex-row.border.navbar.fixed-top
+      #header-row.d-flex.flex-row.border.navbar.fixed-top.align-items-stretch
         #logo-container.d-flex.flex-wrap.align-items-center
           img.m-1(src='./images/logo.png')
-        #title-container.nav.d-flex.flex-wrap.align-items-center
+        #title-container.nav.d-flex.flex-wrap.align-items-stretch
           ul.nav
             li.nav-link#project-name
               strong= packageJSON.name
               span#version.ms-1 v#{packageJSON.version}
-            li.nav-link
-              a(href='#') Home
-            li.nav-link
-              a(href='#') Documentation
+            li.nav-link.active-header-tab#nav-home-li
+              a#nav-home(href='#') Home
+            li.nav-link#nav-api-li
+              a#nav-api(href='#') API Documentation
         #header-space-fill.flex-fill
         #github-link-container
           ul.nav
             li.nav-link
               a(href=packageJSON.repository.url target="_blank") Github
 
-
-      #content-area.d-flex.flex-row.flex-fill.overflow-hidden
+      // LOWER PANE
+      #readme-container.d-flex.flex-col.flex-fill.justify-content-center(style='visibility: visible')
+        #readme !{opts.readme}
+      #content-area.d-flex.flex-row.flex-fill.overflow-hidden(style='visibility: collapse')
 
         // SIDEBAR
         #sidebar.d-flex.flex-column.flex-shrink-0.border
