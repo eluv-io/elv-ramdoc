@@ -340,8 +340,6 @@ exports.publish = (data, opts) => {
   }
 
 
-  const templateFile = Path.resolve(__dirname, 'index.pug')
-
   const prunedData = helper.prune(data)()
   if (ELV_RAMDOC_DEBUG) {
     console.log('---------')
@@ -388,7 +386,13 @@ exports.publish = (data, opts) => {
     packageJSON
   }
 
-  const outputContent = pug.renderFile(templateFile, context)
-  const outputFile = Path.resolve(opts.destination, 'index.html')
-  fs.writeFileSync(outputFile, outputContent, {encoding: 'utf8'})
+  const templateFileIndex = Path.resolve(__dirname, 'index.pug')
+  const outputContentIndex = pug.renderFile(templateFileIndex, context)
+  const outputFileIndex = Path.resolve(opts.destination, 'index.html')
+  fs.writeFileSync(outputFileIndex, outputContentIndex, {encoding: 'utf8'})
+
+  const templateFileAPI = Path.resolve(__dirname, 'api.pug')
+  const outputContentAPI = pug.renderFile(templateFileAPI, context)
+  const outputFileAPI = Path.resolve(opts.destination, 'api.html')
+  fs.writeFileSync(outputFileAPI, outputContentAPI, {encoding: 'utf8'})
 }

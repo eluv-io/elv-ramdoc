@@ -5,11 +5,7 @@
 
   const cards = toArray(document.querySelectorAll('.card'))
   const clearFilterIcon = document.getElementById('clear-filter-icon')
-  const contentArea = document.getElementById('content-area')
   const entries = toArray(document.querySelectorAll('.toc-entry'))
-  const navApiLi = document.getElementById('nav-api-li')
-  const navHomeLi = document.getElementById('nav-home-li')
-  const readmeContainer = document.getElementById('readme-container')
   const textFilter = document.getElementById('filter-text')
   const privateFilter = document.getElementById('show-private')
 
@@ -27,22 +23,6 @@
     // did user click on a category name?
     if (category) {
       filterStringSet(category)
-    }
-
-    // did user click on 'Home'?
-    if (target.id === 'nav-home') {
-      contentArea.style.visibility = 'collapse'
-      readmeContainer.style.visibility = 'visible'
-      navHomeLi.classList.add('active-header-tab')
-      navApiLi.classList.remove('active-header-tab')
-    }
-
-    // did user click on 'API Documentation'?
-    if (target.id === 'nav-api') {
-      readmeContainer.style.visibility = 'collapse'
-      contentArea.style.visibility = 'visible'
-      navHomeLi.classList.remove('active-header-tab')
-      navApiLi.classList.add('active-header-tab')
     }
 
     // did user click on space between ToC entry name and category?
@@ -111,12 +91,8 @@
   }
 
   function scrollToTop() {
-    if(contentArea.style.visibility === 'visible') {
-      const main = document.querySelector('#detail-entries')
-      main.scrollTop = 0
-    } else {
-      readmeContainer.scrollTop = 0
-    }
+    const main = document.querySelector('#detail-entries')
+    if(main) main.scrollTop = 0
   }
 
   function strIn(a, b) {

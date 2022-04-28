@@ -11175,6 +11175,10 @@ textarea.form-control-lg {
   height: 2em;
 }
 
+#project-name {
+  cursor: default;
+}
+
 #project-name * {
   padding-left: 0.5rem;
   color: white;
