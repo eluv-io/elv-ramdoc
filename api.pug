@@ -114,7 +114,11 @@ html.docs-page(lang='en')
                           strong
                             each t, index in param.type
                               = t === '*' ? 'Any' : t
-                          code.ms-2.param-name= param.name
+                          code.ms-2.param-name
+                            if param.name===''
+                              em (unnamed)
+                            else
+                              = param.name
                           span.ms-1.description !{param.description}
                       li.list-group-item
                         em Returns:

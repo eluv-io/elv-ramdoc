@@ -148,9 +148,7 @@ const _prettifySig = pipe(
 const _simplifySee = chain(split(/\s*,\s*/))
 
 /**
- * Splits each string in an array by comma (excising whitespace in the process), keeping the array flat.
- * Used to simplify handling of @see tag listing multiple items, where items might be listed on same line
- * (separated by commas) on multiple lines.
+ * Filters array of objects based on `title` attribute.
  *
  * @function
  * @since v0.0.1
@@ -305,7 +303,7 @@ const _simplifyData = baseDir => applySpec({                    // REMAP: create
  * @since v0.0.1
  * @category File
  * @sig ([Object], Object) -> undefined
- * @param {Object[]} data - [TaffyDB database](https://taffydb.com) passed in by JSDoc
+ * @param {Object} data - [TaffyDB database](https://taffydb.com) passed in by JSDoc
  * @param {Object} opts - Options info passed in by JSDoc
  * @returns {undefined}
  *
