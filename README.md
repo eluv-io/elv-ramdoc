@@ -9,7 +9,8 @@ These are the major changes:
  * Updated [bootstrap](https://getbootstrap.com/) to version 5.1.3
  * Enhanced filtering to also show/hide the detailed entries, not just the table of contents rows
  * Removed 'Open in REPL' / 'Run it here' links, as well as some tag sections we did not need (e.g.`aka`)
- * Made name and GitHub links dynamic by retrieving info from package.json
+ * Made project name and GitHub links dynamic by retrieving info from package.json
+ * Added Eluvio logo (linking to https://eluv.io) and favicon 
 
 ## Install
 
@@ -22,7 +23,7 @@ The following are assumed by this template and this README:
 
  * Your code is hosted on [GitHub](https://github.com/)
  * Your project's repo has version tags (e.g.`v0.0.1`)
- * Your project's documentation is to be built in top level directory `docs`
+ * Your project's documentation is in top level directory `docs`
  * Your project has [GitHub Pages](https://docs.github.com/en/pages/getting-started-with-github-pages) enabled
    * Make sure your account or organization has GitHub Pages enabled
    * Configure GitHub Pages for your project
@@ -30,37 +31,39 @@ The following are assumed by this template and this README:
      * Under Source, pick the branch and the folder (`/docs`)
  * You have the following files at the top level of your repo:
    * `README.md`
+   * `.jsdoc.json` (see below for sample)
    * `package.json` with the following attributes:
      * `name`
      * `version`
      * `homepage` set to the URL of your project's GitHub pages root
      * `repository.url` set to the URL of your project's GitHub repo
-   * `.jsdoc.json` (see below for sample)
+   
 
-NOTE: You should put a link to the API documentation in your README file that connects to GitHub pages, e.g.:
+NOTE: You should put a link to the API documentation in your README.md file that connects to GitHub pages, e.g.:
 ```markdown
 ## API Documentation
 
-[https://eluv-io.github.io/elv-ramdoc/](https://eluv-io.github.io/elv-ramdoc/)
+[https://eluv-io.github.io/elv-ramdoc/api.html](https://eluv-io.github.io/elv-ramdoc/api.html)
 ```
 
 ### Example `package.json` fragment
+Note that `homepage` is set to project GitHub Pages root, while `repository.url` points to the GitHub project page.
 ```json
 {
   "name": "@eluvio/elv-ramdoc",
   "version": "0.0.2",
+  "homepage": "https://eluv-io.github.io/elv-ramdoc",
   "repository": {
     "type": "git",
     "url": "https://github.com/eluv-io/elv-ramdoc"
-  },
-  "homepage": "https://github.com/eluv-io/elv-ramdoc"
+  }
 }
 ```
 
 ### Example `.jsdoc.json` file
 Assumes the following:
  * Your `.js` files are in `src/`
- * Your documentation files are to go in `docs/`
+ * Your documentation files are in `docs/`
  * You want to include items that have `@private` specified
 ```json
 {

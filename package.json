@@ -11,7 +11,7 @@
     "test": "npm run build-styles  && jsdoc --readme ./README.md -c ./fixtures/fixtures.jsdoc.json",
     "version": "npm run build-styles && npm run generate-docs && git add docs && git commit -m 'Update docs'"
   },
-  "homepage": "",
+  "homepage": "https://eluv-io.github.io/elv-ramdoc",
   "repository": {
     "type": "git",
     "url": "https://github.com/eluv-io/elv-ramdoc"
