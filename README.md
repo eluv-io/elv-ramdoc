@@ -119,7 +119,7 @@ In order for the GitHub source code links to work properly, you should rebuild a
 ```
 ## API Documentation
 
-[https://eluv-io.github.io/elv-ramdoc/](https://eluv-io.github.io/elv-ramdoc/api.html)
+[https://eluv-io.github.io/elv-ramdoc/api.html](https://eluv-io.github.io/elv-ramdoc/api.html)
 
 ## License
 MIT
