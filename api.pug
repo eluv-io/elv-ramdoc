@@ -74,7 +74,7 @@ html.docs-page(lang='en')
                 )
                   a(href=`#${doc.name}`) #{doc.name}&nbsp;&nbsp;
                     if doc.curried
-                      strong(title="curried") λ
+                      strong(title="curried"): em λ
                     span.label.label-category(
                       data-category=doc.category
                     )= doc.category
