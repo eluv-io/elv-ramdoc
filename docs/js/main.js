@@ -42,6 +42,9 @@
     cards.forEach(f)
   }
 
+  // TODO: add support for more sophisticated matching when filter starts with '(', change category matching
+  // to use expression like '(category='Model')' to fix partial matching e.g. Model matching category + function name
+
   // toggle visibility for one DOM element
   function filterElement(nameFilter, privateFilter, elem) {
     elem.style.display =
