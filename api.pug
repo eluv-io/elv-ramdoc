@@ -69,9 +69,12 @@ html.docs-page(lang='en')
                   data-name=doc.name
                   data-category=doc.category
                   data-access=doc.access
+                  data-curried=doc.curried
                   display=doc.access === 'private' ? 'none' : ''
                 )
                   a(href=`#${doc.name}`) #{doc.name}&nbsp;&nbsp;
+                    if doc.curried
+                      strong(title="curried") λ
                     span.label.label-category(
                       data-category=doc.category
                     )= doc.category
@@ -103,6 +106,10 @@ html.docs-page(lang='en')
 
               each sig in doc.sigs
                 .sig-container: code.sig #{sig}
+              if doc.curried
+                small: em
+                  strong.ms-2.me-1 λ
+                  = 'curried function'
 
               if doc.returns.type
                 .params(data-expanded='false')

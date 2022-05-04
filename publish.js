@@ -219,6 +219,12 @@ const _simplifyData = baseDir => applySpec({                    // REMAP: create
     head,
     defaultTo('')
   ),
+  curried: pipe(                                       // create 'curried' attribute
+    prop('tags'),
+    _titleFilter('curried'),
+    head,
+    propEq('text','')
+  ),
   deprecated: pipe(                                    // create 'deprecated' attribute
     prop('deprecated'),
     defaultTo('')

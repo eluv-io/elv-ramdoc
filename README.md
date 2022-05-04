@@ -68,7 +68,7 @@ Assumes the following:
 ```json
 {
   "tags": {
-    "allowUnknownTags": ["category","sig"],
+    "allowUnknownTags": ["category","curried","sig"],
     "dictionaries": ["jsdoc"]
   },
   "source": {
