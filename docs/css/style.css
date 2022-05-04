@@ -11198,21 +11198,22 @@ textarea.form-control-lg {
   max-width: 80em;
 }
 #readme pre {
-  padding: 2px 4px;
-  font-size: 90%;
-  color: #000;
-  background-color: #EEE;
-  border-radius: 4px;
   padding: 1rem;
   margin-left: 1rem;
   margin-right: 1rem;
-}
-#readme code {
-  padding: 2px 4px;
-  font-size: 90%;
-  color: #000;
   background-color: #EEE;
   border-radius: 4px;
+}
+#readme pre code {
+  padding: 0;
+}
+#readme code {
+  margin-bottom: 0;
+  font-size: 90%;
+  border-radius: 4px;
+  color: #000;
+  background-color: #EEE;
+  padding: 2px 4px;
 }
 
 #content-area {

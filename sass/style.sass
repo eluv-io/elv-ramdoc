@@ -102,13 +102,24 @@ $category-bg-color: mix($primary, $gray-100, 15%)
   max-width: 80em
 
   pre
-    @include inline-code
+    //@include inline-code
     padding: $spacer
     margin-left: $spacer
     margin-right: $spacer
+    background-color: $light-grey
+    border-radius: 4px
+
+    code
+      padding: 0
 
   code
-    @include inline-code
+    //@include inline-code
+    margin-bottom: 0
+    font-size: 90%
+    border-radius: 4px
+    color: #000
+    background-color: $light-grey
+    padding: 2px 4px
 
 #content-area
   margin-top: $header-height
