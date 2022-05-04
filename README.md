@@ -4,6 +4,7 @@ This is a [JSDoc](https://jsdoc.app/) template created by customizing the [templ
 
 These are the major changes:
  * Added 'Show private' checkbox to filter
+ * Added support for `@curried` tag
  * Changed HTML templating engine from [handlebars](https://handlebarsjs.com/) to [pug](https://pugjs.org/api/getting-started.html)
  * Changed CSS templating engine from [less](https://lesscss.org/) to [sass](https://sass-lang.com/)
  * Updated [bootstrap](https://getbootstrap.com/) to version 5.1.3
