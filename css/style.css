@@ -11328,6 +11328,13 @@ textarea.form-control-lg {
   background-color: #EEE;
   border-radius: 4px;
 }
+#content-area code.value {
+  padding: 2px 4px;
+  font-size: 90%;
+  color: #000;
+  background-color: #EEE;
+  border-radius: 4px;
+}
 #content-area .param-name {
   padding: 2px 4px;
   font-size: 90%;

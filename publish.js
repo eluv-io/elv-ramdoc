@@ -297,7 +297,9 @@ const _simplifyData = baseDir => applySpec({                    // REMAP: create
   since: pipe(                                         // create 'since' attribute
     prop('since'),
     defaultTo('')
-  )
+  ),
+  type: path(['type', 'names', 0]),                    // create 'type' attribute (used by @constant)
+  value: prop('defaultvalue')                          // create 'value' attribute (used by @constant)
 })
 
 //TODO: add pre-check for needed info in package.json

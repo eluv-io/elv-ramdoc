@@ -102,7 +102,6 @@ $category-bg-color: mix($primary, $gray-100, 15%)
   max-width: 80em
 
   pre
-    //@include inline-code
     padding: $spacer
     margin-left: $spacer
     margin-right: $spacer
@@ -113,7 +112,6 @@ $category-bg-color: mix($primary, $gray-100, 15%)
       padding: 0
 
   code
-    //@include inline-code
     margin-bottom: 0
     font-size: 90%
     border-radius: 4px
@@ -214,6 +212,9 @@ $category-bg-color: mix($primary, $gray-100, 15%)
     margin-bottom: $spacer * .25
 
   code.sig
+    @include inline-code
+
+  code.value
     @include inline-code
 
   .param-name

@@ -132,10 +132,17 @@ html.docs-page(lang='en')
                         strong.ms-1= doc.returns.type
                         span.ms-1.description !{doc.returns.description}
 
+              if doc.type
+                p.fs-5
+                  em Type:
+                  strong.ms-1= doc.type
+                  if doc.value
+                    code.ms-2.value= JSON.stringify(doc.value)
+
               if doc.since
                 p: small: em Added in #{doc.since}
 
-              .description !{doc.description}
+              .description.mt-1 !{doc.description}
 
               if doc.see && doc.see.length > 0
                 p.see See also
