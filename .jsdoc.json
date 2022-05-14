@@ -1,10 +1,18 @@
 {
   "tags": {
-    "allowUnknownTags": ["category","curried","sig"],
-    "dictionaries": ["jsdoc"]
+    "allowUnknownTags": [
+      "category",
+      "curried",
+      "sig"
+    ],
+    "dictionaries": [
+      "jsdoc"
+    ]
   },
   "source": {
-    "include": ["publish.js"],
+    "include": [
+      "publish.js"
+    ],
     "includePattern": ".js$",
     "excludePattern": "(node_modules/|docs)"
   },

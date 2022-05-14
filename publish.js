@@ -305,7 +305,8 @@ const _simplifyData = baseDir => applySpec({                    // REMAP: create
 //TODO: add pre-check for needed info in package.json
 
 /**
- * Empties target directory specified in `opts.destination` then populates with documentation files generated from `data`
+ * Empties target directory specified in `opts.destination` then populates with documentation files generated from
+ * `data` passed in by JSDoc
  *
  * @function
  * @since v0.0.1
