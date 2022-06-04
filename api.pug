@@ -119,8 +119,12 @@ html.docs-page(lang='en')
                       each param in doc.params
                         li.list-group-item
                           strong
-                            each t, index in param.type
-                              = t === '*' ? 'Any' : t
+                            - const paramType = param.type.replace('*', 'Any')
+                            if docNames.includes(paramType)
+                              a(href='#' + paramType)
+                                = paramType
+                            else
+                              = paramType
                           code.ms-2.param-name
                             if param.name===''
                               em (unnamed)

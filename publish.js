@@ -389,6 +389,7 @@ exports.publish = (data, opts) => {
   const context = {
     baseDir,
     docs,
+    docNames: docs.map(prop('name')),
     opts,
     packageJSON
   }
