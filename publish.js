@@ -64,8 +64,8 @@ const _copyDir = (sourceDir, destDir) => {
 }
 
 const _dependencies = async (inputPath, entryPoint) => {
-  // console.log(`inputPath=${inputPath}`)
-  // console.log(`entryPoint=${entryPoint}`)
+  console.log(`inputPath=${inputPath}`)
+  console.log(`entryPoint=${entryPoint}`)
   const result = await madge(
     inputPath,
     {
@@ -360,7 +360,7 @@ exports.publish = (data, opts) => {
   if (!opts.destination.includes('docs')) throw Error('Expected to find "docs" in the destination path. This is a safety check to try to prevent accidental emptying of the wrong directory.')
 
   // get info needed to generate dependency graphs
-  const inputPath = Path.join(baseDir, opts["_"][0])
+  const inputPath =  Path.basename(baseDir) === opts["_"][0] ? baseDir : Path.join(baseDir, opts["_"][0])
   const entryPoint = _isDir(inputPath) ? packageJSON.main : ""
   _dependencies(inputPath, entryPoint).then(
     result => {
