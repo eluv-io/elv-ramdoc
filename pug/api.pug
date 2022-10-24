@@ -1,0 +1,10 @@
+include mixins/ApiMainContent
+include mixins/ApiSidebar
+include mixins/DocWithTopNavBar
+
++DocWithTopNavBar('api')
+  #content-area.d-flex.flex-row.flex-fill.overflow-hidden
+    +ApiSidebar
+    +ApiMainContent
+  script(src='./js/ramda.min.js')
+  script(src='./js/main.js')

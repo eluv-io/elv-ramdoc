@@ -1,0 +1,5 @@
+mixin ApiCardSeeAlso(doc)
+  if doc.see && doc.see.length > 0
+    p.see See also
+      each s, index in doc.see
+        a(href=`#${s}`)= ` ${s}${index !== 0 && index !== (doc.see.length - 1) ? ',' : ''}`

@@ -1,0 +1,31 @@
+include ApiCardCurried
+include ApiCardDeprecated
+include ApiCardDescription
+include ApiCardExample
+include ApiCardFuncSigs
+include ApiCardHeader
+include ApiCardParams
+include ApiCardSeeAlso
+include ApiCardSince
+include ApiCardType
+
+mixin ApiMainContent()
+  #detail-entries.d-flex.flex-fill.flex-column.flex-grow-0.border-start.overflow-auto
+    each doc in docs
+      .section-id(id=doc.name)
+      .card(
+        data-name=doc.name
+        data-access=doc.access
+        data-category=doc.category
+        display=doc.access === 'private' ? 'none' : ''
+      )
+        +ApiCardHeader(doc)
+        +ApiCardDeprecated(doc)
+        +ApiCardFuncSigs(doc)
+        +ApiCardCurried(doc)
+        +ApiCardParams(doc)
+        +ApiCardType(doc)
+        +ApiCardSince(doc)
+        +ApiCardDescription(doc)
+        +ApiCardSeeAlso(doc)
+        +ApiCardExample(doc)

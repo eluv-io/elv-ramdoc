@@ -1,14 +1,18 @@
-const ELV_RAMDOC_DEBUG = process.env.ELV_RAMDOC_DEBUG
+const _ELV_RAMDOC_DEBUG = process.env.ELV_RAMDOC_DEBUG
 
 const fs = require('fs-extra')
 const Path = require('path') // can't use lower-case 'path' because of name collision with ramda
 
+const madge = require('madge')
+
 const {
   applySpec,
+  ascend,
   chain,
   defaultTo,
   filter,
   head,
+  identity,
   join,
   map,
   path,
@@ -16,9 +20,10 @@ const {
   prop,
   propEq,
   replace,
+  sortWith,
   split,
+  values
 } = require('ramda')
-
 
 const helper = require('jsdoc/util/templateHelper')
 const hljs = require('highlight.js')
@@ -57,6 +62,23 @@ const _copyDir = (sourceDir, destDir) => {
     }
   )
 }
+
+const _dependencies = async (inputPath, entryPoint) => {
+  // console.log(`inputPath=${inputPath}`)
+  // console.log(`entryPoint=${entryPoint}`)
+  const result = await madge(
+    inputPath,
+    {
+      excludeRegExp: [new RegExp('^' + _escapeRegExp(entryPoint) + '$')]
+    }
+  )
+  return result.obj()
+}
+
+// see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions#escaping
+const _escapeRegExp = string => string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') // $& means the whole matched string
+
+const _isDir = pathString => fs.statSync(pathString).isDirectory();
 
 /**
  * Converts text in [Markdown](https://www.markdownguide.org/) format to an HTML string
@@ -223,7 +245,7 @@ const _simplifyData = baseDir => applySpec({                    // REMAP: create
     prop('tags'),
     _titleFilter('curried'),
     head,
-    propEq('text','')
+    propEq('text', '')
   ),
   deprecated: pipe(                                    // create 'deprecated' attribute
     prop('deprecated'),
@@ -299,14 +321,17 @@ const _simplifyData = baseDir => applySpec({                    // REMAP: create
     defaultTo('')
   ),
   type: path(['type', 'names', 0]),                    // create 'type' attribute (used by @constant)
-  value: prop('defaultvalue')                          // create 'value' attribute (used by @constant)
+  value: prop('defaultvalue'),                         // create 'value' attribute (used by @constant)
+  original: identity
 })
 
 //TODO: add pre-check for needed info in package.json
 
 /**
+ * Function called by JSDoc to generate the final documentation files.
+ *
  * Empties target directory specified in `opts.destination` then populates with documentation files generated from
- * `data` passed in by JSDoc
+ * `data` passed in by JSDoc.
  *
  * @function
  * @since v0.0.1
@@ -314,6 +339,15 @@ const _simplifyData = baseDir => applySpec({                    // REMAP: create
  * @sig ([Object], Object) -> undefined
  * @param {Object} data - [TaffyDB database](https://taffydb.com) passed in by JSDoc
  * @param {Object} opts - Options info passed in by JSDoc
+ * @param {Array} opts._ - List of files/directories to scan
+ * @param {String} opts.readme - Text to use for README page
+ * @param {String} opts.configure - Path to JSDoc configuration file, e.g. `".jsdoc.json"`
+ * @param {String} opts.destination - The path to the output folder for the generated documentation.
+ * @param {String} opts.encoding - Assume this encoding when reading all source files. Defaults to `"utf8"`.
+ * @param {Boolean} opts.pedantic - Treat errors as fatal errors, and treat warnings as errors.
+ * @param {Boolean} opts.private - Include symbols marked with the `@private` tag in the generated documentation.
+ * @param {Boolean} opts.recurse - Recurse into subdirectories when scanning for source files and tutorials
+ * @param {String} opts.template - The path to the template directory to use for generating output (the directory containing the `publish.js` script and other needed files)
  * @returns {undefined}
  *
  */
@@ -325,6 +359,25 @@ exports.publish = (data, opts) => {
 
   if (!opts.destination.includes('docs')) throw Error('Expected to find "docs" in the destination path. This is a safety check to try to prevent accidental emptying of the wrong directory.')
 
+  // get info needed to generate dependency graphs
+  const inputPath = Path.join(baseDir, opts["_"][0])
+  const entryPoint = _isDir(inputPath) ? packageJSON.main : ""
+  _dependencies(inputPath, entryPoint).then(
+    result => {
+      if (_ELV_RAMDOC_DEBUG) {
+        console.group('INTERNAL DEPENDENCIES:')
+        console.log(`items analyzed for dependencies: ${Object.keys(result).length}`)
+        console.log(`internal dependency links: ${values(result).reduce(
+          (accumulator, element) => accumulator + element.length,
+          0
+        )}`)
+        console.groupEnd()
+        console.log()
+      }
+      return result
+    }
+  )
+
   // delete any previous files
   fs.emptyDirSync(Path.resolve(opts.destination))
 
@@ -334,21 +387,49 @@ exports.publish = (data, opts) => {
   _copyDir(Path.resolve('./node_modules/ramda/dist'), Path.resolve(opts.destination, 'js'))
   _copyDir(Path.resolve(__dirname, 'css'), Path.resolve(opts.destination, 'css'))
 
-  if (ELV_RAMDOC_DEBUG) {
-    console.log('---------')
-    console.log('raw data:')
-    console.log('---------')
+  if (_ELV_RAMDOC_DEBUG) {
+    console.group('raw data:')
     console.log(JSON.stringify(data().get(), null, 2))
-    console.log()
-    console.log('---------')
-    console.log('opts:')
-    console.log('---------')
+    console.groupEnd()
+
+    console.group('opts:')
     console.log(JSON.stringify(opts, null, 2))
+    console.groupEnd()
   }
 
+  let undocumentedItems = data()
+    .get()
+    .filter(
+      i => i.undocumented
+        && i.scope === 'global'
+        && i.name === i.meta.code.name
+        && ['constant', 'function'].includes(i.kind)
+        && i.meta.code.type !== 'CallExpression'
+        && i.meta.filename !== entryPoint // assumes that main entry point is just a packaging wrapper, no docs expected
+    )
+    .map(
+      i => Object(
+        {
+          name: i.name,
+          location: Path.join(i.meta.path, i.meta.filename)
+            + ':' + i.meta.lineno
+            + ':' + i.meta.columnno,
+          codetype: i.meta.code.type,
+          kind: i.kind
+        }
+      )
+    )
+
+  undocumentedItems = sortWith(
+    [
+      ascend(prop('location')),
+      ascend('name'),
+    ],
+    undocumentedItems
+  )
 
   const prunedData = helper.prune(data)()
-  if (ELV_RAMDOC_DEBUG) {
+  if (_ELV_RAMDOC_DEBUG) {
     console.log('---------')
     console.log('pruned data:')
     console.log('---------')
@@ -365,24 +446,19 @@ exports.publish = (data, opts) => {
 
   // noinspection JSValidateTypes
   const docs = filteredData.map(_simplifyData(baseDir)) // tailor for our template
-  if (ELV_RAMDOC_DEBUG) {
-    console.log('---------')
-    console.log('filtered data:')
-    console.log('---------')
+  if (_ELV_RAMDOC_DEBUG) {
+    console.group('filtered data:')
     console.log(JSON.stringify(filteredData, null, 2))
-    console.log()
-  }
+    console.groupEnd()
 
-  if (ELV_RAMDOC_DEBUG) {
-    console.log('---------')
-    console.log('filtered and reprocessed docs:')
-    console.log('---------')
+    console.group('Filtered and reprocessed docs:')
     console.log(JSON.stringify(docs, null, 2))
+    console.groupEnd()
     console.log()
-    console.log('---------')
-    console.log('packageJSON:')
-    console.log('---------')
+
+    console.group('packageJSON:')
     console.log(JSON.stringify(packageJSON, null, 2))
+    console.groupEnd()
     console.log()
   }
 
@@ -394,13 +470,17 @@ exports.publish = (data, opts) => {
     packageJSON
   }
 
-  const templateFileIndex = Path.resolve(__dirname, 'index.pug')
+  const templateFileIndex = Path.resolve(__dirname, 'pug', 'index.pug')
   const outputContentIndex = pug.renderFile(templateFileIndex, context)
   const outputFileIndex = Path.resolve(opts.destination, 'index.html')
   fs.writeFileSync(outputFileIndex, outputContentIndex, {encoding: 'utf8'})
 
-  const templateFileAPI = Path.resolve(__dirname, 'api.pug')
+  const templateFileAPI = Path.resolve(__dirname,'pug', 'api.pug')
   const outputContentAPI = pug.renderFile(templateFileAPI, context)
   const outputFileAPI = Path.resolve(opts.destination, 'api.html')
   fs.writeFileSync(outputFileAPI, outputContentAPI, {encoding: 'utf8'})
+
+  console.group('UNDOCUMENTED ITEMS:')
+  undocumentedItems.map(i => console.log(i.name + ' (' + i.kind + ')\n' + i.location + '\n'))
+  console.groupEnd()
 }

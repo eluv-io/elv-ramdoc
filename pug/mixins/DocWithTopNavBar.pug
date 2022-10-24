@@ -1,0 +1,23 @@
+include TopNavBar
+
+mixin DocWithTopNavBar(docId)
+  doctype html
+  html.docs-page(lang='en')
+    head
+      meta(charset='UTF-8')
+      meta(name='viewport' content='width=device-width, initial-scale=1')
+      link(rel='shortcut icon' href='./images/favicon.png')
+      link(href='./css/style.css' rel='stylesheet')
+      title #{name}
+    body
+      // ENTIRE BROWSER VIEW AREA
+      #viewport.d-flex.flex-column.vh-100
+
+        // UPPER PANE
+        +TopNavBar(docId)
+
+        // LOWER PANE
+        if block
+          block
+        else
+          p No lower pane content block provided!

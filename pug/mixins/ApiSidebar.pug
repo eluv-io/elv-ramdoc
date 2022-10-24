@@ -1,0 +1,47 @@
+mixin ApiSidebar()
+  // SIDEBAR
+  #sidebar.d-flex.flex-column.flex-shrink-0.border
+    // SIDEBAR FILTER CONTROLS
+    #filter-controls.d-flex.flex-column.border-bottom
+      form
+        .m-2.d-flex.flex-row
+          .form-control
+            input#filter-text(
+              type='text'
+              tabindex='1'
+              autofocus
+              data-bind='textInput: filter'
+              autocomplete='false'
+              placeholder='Filter'
+            )
+            span#clear-filter-icon
+              img(src='./images/x-circle.svg')
+            span#search-icon
+              img(src='./images/search.svg')
+        .m-2
+          .form-check.ms-1
+            input#show-private.form-check-input(
+              tabindex='2'
+              type='checkbox'
+              data-bind='textInput: showPrivate'
+            )
+            label.form-check-label(for='show-private') Show private
+
+    // SIDEBAR ITEM LIST
+    #toc.d-flex.flex-fill.flex-column
+      ul.nav.list-group
+        each doc in docs
+          li.list-group-item-action.toc-entry(
+            data-name=doc.name
+            data-category=doc.category
+            data-access=doc.access
+            data-curried=doc.curried
+            display=doc.access === 'private' ? 'none' : ''
+          )
+            a(href=`#${doc.name}`) #{doc.name}&nbsp;&nbsp;
+              if doc.curried
+                strong(title="curried"): em λ
+              span.label.label-category(
+                data-category=doc.category
+              )= doc.category
+

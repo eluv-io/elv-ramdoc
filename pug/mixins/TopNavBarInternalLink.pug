@@ -1,0 +1,6 @@
+mixin TopNavBarInternalLink(docId, linkHref, caption, activeDocId)
+  li.nav-link(
+    id=(tabId + '-li,')
+    class=(docId === activeDocId ? 'active-header-tab' : 'inactive-header-tab')
+  )
+    a#nav-home(href=linkHref)=caption

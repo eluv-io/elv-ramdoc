@@ -1,0 +1,7 @@
+mixin ApiCardType(doc)
+  if doc.type
+    p.fs-5
+      em Type:
+      strong.ms-1= doc.type
+      if doc.value
+        code.ms-2.value= JSON.stringify(doc.value)
