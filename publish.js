@@ -20,6 +20,7 @@ const {
   prop,
   propEq,
   replace,
+  sortBy,
   sortWith,
   split,
   values
@@ -437,12 +438,9 @@ exports.publish = (data, opts) => {
     console.log()
   }
 
-  const filteredData = prunedData
-    .order('name')
-    .filter({kind: ['function', 'constant', 'class']})
-    .get()  // convert to array of objects
+  const filteredData = sortBy(prop('name'),  prunedData.get())
+    .filter(x => ['function', 'constant', 'class'].includes(x.kind))
     .filter(x => opts.private || (x.access !== 'private')) // filter out private items if opts.private is false
-
 
   // noinspection JSValidateTypes
   const docs = filteredData.map(_simplifyData(baseDir)) // tailor for our template
