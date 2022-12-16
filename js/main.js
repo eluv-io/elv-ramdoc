@@ -125,6 +125,9 @@
         'data-expanded',
         expanded === 'true' ? 'false' : 'true'
       )
+    } else if (event.target.tagName === "A" && event.target.getAttribute('href').startsWith('#')) {
+      // clear filter when cross-reference is clicked
+      clearFilter()
     }
   }, false)
 

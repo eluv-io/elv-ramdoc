@@ -2,7 +2,7 @@
   "name": "@eluvio/elv-ramdoc",
   "version": "0.3.0",
   "description": "A customized version of the JSDoc template used by Ramda's API docs",
-  "main": "index.js",
+  "main": "publish.js",
   "scripts": {
     "build-styles": "./node_modules/.bin/sass ./sass/style.sass ./css/style.css",
     "generate-docs": "jsdoc --readme README.md --configure .jsdoc.json",
