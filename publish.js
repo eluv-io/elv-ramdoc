@@ -23,6 +23,7 @@ const {
   sortBy,
   sortWith,
   split,
+  toUpper,
   values
 } = require('@eluvio/ramda-fork')
 
@@ -438,7 +439,7 @@ exports.publish = (data, opts) => {
     console.log()
   }
 
-  const filteredData = sortBy(prop('name'),  prunedData.get())
+  const filteredData = sortBy(x => x && toUpper(`${x.name}`),  prunedData.get())
     .filter(x => ['function', 'constant', 'class'].includes(x.kind))
     .filter(x => opts.private || (x.access !== 'private')) // filter out private items if opts.private is false
 
