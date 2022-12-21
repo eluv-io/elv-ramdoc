@@ -24,7 +24,7 @@ const {
   sortWith,
   split,
   values
-} = require('ramda')
+} = require('@eluvio/ramda-fork')
 
 const helper = require('jsdoc/util/templateHelper')
 const hljs = require('highlight.js')
@@ -385,7 +385,7 @@ exports.publish = (data, opts) => {
   // copy static assets
   _copyDir(Path.resolve(__dirname, 'images'), Path.resolve(opts.destination, 'images'))
   _copyDir(Path.resolve(__dirname, 'js'), Path.resolve(opts.destination, 'js'))
-  _copyDir(Path.resolve('./node_modules/ramda/dist'), Path.resolve(opts.destination, 'js'))
+  _copyDir(Path.resolve('./node_modules/@eluvio/ramda-fork/dist'), Path.resolve(opts.destination, 'js'))
   _copyDir(Path.resolve(__dirname, 'css'), Path.resolve(opts.destination, 'css'))
 
   if (_ELV_RAMDOC_DEBUG) {
