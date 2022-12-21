@@ -125,6 +125,13 @@
         'data-expanded',
         expanded === 'true' ? 'false' : 'true'
       )
+    } else if (event.target.tagName === "A" && event.target.getAttribute('href').startsWith('#')) {
+      // clear filter when cross-reference is clicked and target is not visible
+      let href = event.target.getAttribute('href')
+      let anchor = document.querySelector(`a[href='${href}']`);
+      if(anchor){
+        if(anchor.parentElement.style.display==="none") clearFilter()
+      }
     }
   }, false)
 
