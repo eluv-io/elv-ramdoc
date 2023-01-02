@@ -102,6 +102,30 @@ const _markdownToHtml = function (mdString) {
   return marked.parse(mdString)
 }
 
+const _exampleSplitMultilineOutput = line => {
+
+  const slashReplacements = {'\\\\': '\\', '\\n': '\n', '\\"': '"'};
+
+  function slashUnescape(contents) {
+    return contents.replace(/\\([\\n"])/g, function(replace) {
+      return slashReplacements[replace];
+    });
+  }
+
+  const regex = /^(.+)\/\/(=> +OUTPUT: +`)(.+)` *$/
+
+  const match = line.match(regex)
+  if(match){
+    const indentText = ' '.repeat(match[1].length) + '//' + ' '.repeat(match[2].length)
+    const outputLines = slashUnescape(match[3]).split('\n')
+
+    const line1 = match[1] + '//' + match[2] + outputLines[0]
+    return outputLines.map((x, i) => i===0 ? line1 : indentText + x).join('\n') + '`'
+  } else {
+    return line
+  }
+}
+
 /**
  * Formats example Javascript code using [highlight.js](https://highlightjs.org/) syntax highlighting
  *
@@ -119,6 +143,9 @@ const _markdownToHtml = function (mdString) {
  *
  */
 const _prettifyCode = pipe(
+  join('\n'),
+  split('\n'),
+  map(_exampleSplitMultilineOutput),
   join('\n'),
   s => hljs.highlight(s, {language: 'javascript'}).value
 )
