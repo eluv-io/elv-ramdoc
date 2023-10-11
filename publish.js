@@ -1,9 +1,14 @@
 const _ELV_RAMDOC_DEBUG = process.env.ELV_RAMDOC_DEBUG
 
-const fs = require('fs-extra')
+const fs = require('fs')
+const fsExtra = require('fs-extra')
 const Path = require('path') // can't use lower-case 'path' because of name collision with ramda
 
+const helper = require('jsdoc/util/templateHelper')
+const Highlight = require('highlight.js')
 const madge = require('madge')
+const marked = require('marked')
+const pug = require('pug')
 
 const {
   applySpec,
@@ -27,10 +32,6 @@ const {
   values
 } = require('@eluvio/ramda-fork')
 
-const helper = require('jsdoc/util/templateHelper')
-const hljs = require('highlight.js')
-const marked = require('marked')
-const pug = require('pug')
 
 /**
  * Copies a directory's contents recursively, creating the destination directory if needed
@@ -56,7 +57,7 @@ const _copyDir = (sourceDir, destDir) => {
   // create dir if it doesn't exist
   if (!fs.existsSync(destDir)) fs.mkdirSync(destDir, {recursive: true})
   // copy contents
-  fs.copy(
+  fsExtra.copy(
     sourceDir,
     destDir,
     err => {
@@ -147,7 +148,7 @@ const _prettifyCode = pipe(
   split('\n'),
   map(_exampleSplitMultilineOutput),
   join('\n'),
-  s => hljs.highlight(s, {language: 'javascript'}).value
+  s => Highlight.highlight(s, {language: 'javascript'}).value
 )
 
 /**
@@ -408,7 +409,7 @@ exports.publish = (data, opts) => {
   )
 
   // delete any previous files
-  fs.emptyDirSync(Path.resolve(opts.destination))
+  fsExtra.emptyDirSync(Path.resolve(opts.destination))
 
   // copy static assets
   _copyDir(Path.resolve(__dirname, 'images'), Path.resolve(opts.destination, 'images'))
@@ -487,13 +488,16 @@ exports.publish = (data, opts) => {
     console.groupEnd()
     console.log()
   }
+  // Convert url reference in packageJSON.repository.url to remove git+ and .git if needed
+  const processGithubUrl = url => url.replace(/^git\+/,'').replace(/\.git$/,'')
 
   const context = {
     baseDir,
     docs,
     docNames: docs.map(prop('name')),
     opts,
-    packageJSON
+    packageJSON,
+    processGithubUrl
   }
 
   const templateFileIndex = Path.resolve(__dirname, 'pug', 'index.pug')

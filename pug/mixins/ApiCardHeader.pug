@@ -4,7 +4,7 @@ mixin ApiCardHeader(doc)
     a.source-code-link(
       target="_blank"
       title='View source on GitHub'
-      href=`${packageJSON.repository.url}/blob/v${packageJSON.version}${doc.filePath}#L${doc.lineno}`
+      href=`${processGithubUrl(packageJSON.repository.url)}/blob/v${packageJSON.version}${doc.filePath}#L${doc.lineno}`
     )
       img(src='./images/box-arrow-up-right.svg')
     span.label-category-big(

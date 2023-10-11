@@ -16,4 +16,4 @@ mixin TopNavBar(docId)
     #github-link-container
       ul.nav
         li.nav-link
-          a(href=packageJSON.repository.url target="_blank") Github
+          a(href=processGithubUrl(packageJSON.repository.url) target="_blank") Github
