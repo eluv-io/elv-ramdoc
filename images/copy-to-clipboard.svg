@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+
+<svg
+   fill="#000000"
+   width="17"
+   height="17"
+   viewBox="0 0 0.765 0.765"
+   version="1.1"
+   preserveAspectRatio="xMidYMid"
+   id="svg281"
+   sodipodi:docname="copy-to-clipboard.svg"
+   inkscape:version="1.2 (dc2aeda, 2022-05-15)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <defs
+     id="defs285" />
+  <sodipodi:namedview
+     id="namedview283"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="51.352941"
+     inkscape:cx="8.5"
+     inkscape:cy="8.5"
+     inkscape:window-width="1792"
+     inkscape:window-height="1067"
+     inkscape:window-x="0"
+     inkscape:window-y="25"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg281" />
+  <title
+     id="title269">copy-to-clipboard-line</title>
+  <g
+     id="g576"
+     transform="scale(0.02125)">
+    <path
+       d="M 22.6,4 H 21.55 A 3.89,3.89 0 0 0 14.24,4 H 13.4 A 2.41,2.41 0 0 0 11,6.4 V 10 H 25 V 6.4 A 2.41,2.41 0 0 0 22.6,4 Z M 23,8 H 13 V 6.25 A 0.25,0.25 0 0 1 13.25,6 h 2.69 L 16.06,4.89 A 1.24,1.24 0 0 1 16.61,4 2,2 0 0 1 19.76,5.18 l 0.09,0.84 h 2.9 A 0.25,0.25 0 0 1 23,6.27 Z"
+       class="clr-i-outline clr-i-outline-path-1"
+       id="path271" />
+    <path
+       d="M 33.25,18.06 H 21.33 l 2.84,-2.83 a 1.0040916,1.0040916 0 1 0 -1.42,-1.42 l -5.25,5.25 5.25,5.25 a 1,1 0 0 0 0.71,0.29 1,1 0 0 0 0.71,-1.7 l -2.84,-2.84 h 11.92 a 1,1 0 0 0 0,-2 z"
+       class="clr-i-outline clr-i-outline-path-2"
+       id="path273" />
+    <path
+       d="m 29,16 h 2 V 6.68 A 1.66,1.66 0 0 0 29.35,5 H 27.08 V 7 H 29 Z"
+       class="clr-i-outline clr-i-outline-path-3"
+       id="path275" />
+    <path
+       d="M 29,31 H 7 V 7 H 9 V 5 H 6.64 A 1.66,1.66 0 0 0 5,6.67 V 31.32 A 1.66,1.66 0 0 0 6.65,33 H 29.36 A 1.66,1.66 0 0 0 31,31.33 v -9.27 h -2 z"
+       class="clr-i-outline clr-i-outline-path-4"
+       id="path277" />
+    <rect
+       x="0"
+       y="0"
+       width="36"
+       height="36"
+       fill-opacity="0"
+       id="rect279" />
+  </g>
+  <metadata
+     id="metadata411">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:title>copy-to-clipboard-line</dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+</svg>

@@ -11917,38 +11917,6 @@ textarea.form-control-lg {
   color: white;
 }
 
-#readme-container {
-  margin-top: 3.75rem;
-  padding: 1rem;
-  background-color: #EEE;
-}
-
-#readme {
-  background-color: white;
-  padding: 2rem;
-  border: 1px solid darkgrey;
-  border-radius: 0.375rem;
-  max-width: 80em;
-}
-#readme pre {
-  padding: 1rem;
-  margin-left: 1rem;
-  margin-right: 1rem;
-  background-color: #EEE;
-  border-radius: 4px;
-}
-#readme pre code {
-  padding: 0;
-}
-#readme code {
-  margin-bottom: 0;
-  font-size: 90%;
-  border-radius: 4px;
-  color: #000;
-  background-color: #EEE;
-  padding: 2px 4px;
-}
-
 #content-area {
   margin-top: 3.75rem;
 }
@@ -12044,6 +12012,10 @@ textarea.form-control-lg {
   float: right !important;
   margin-left: 0.5rem;
 }
+#content-area .copy-link img {
+  vertical-align: baseline;
+  padding-right: 0.25rem;
+}
 #content-area .description code {
   padding: 2px 4px;
   font-size: 90%;
@@ -12106,18 +12078,22 @@ textarea.form-control-lg {
 #content-area .hljs-number {
   color: #fc9;
 }
-#content-area pre,
-#content-area .hljs {
+#content-area pre.example .hljs {
   background: #333;
   color: #ccc;
 }
-#content-area pre {
+#content-area pre.example {
+  background: #333;
+  color: #ccc;
   border: 0;
   margin-bottom: -1rem;
   margin-left: -1rem;
   margin-right: -1rem;
   padding: 1rem;
   border-radius: 0 0 0.5rem 0.5rem;
+}
+#content-area pre.import {
+  border: 0;
 }
 
 /*# sourceMappingURL=style.css.map */

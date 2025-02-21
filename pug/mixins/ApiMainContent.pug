@@ -4,6 +4,7 @@ include ApiCardDescription
 include ApiCardExample
 include ApiCardFuncSigs
 include ApiCardHeader
+include ApiCardImport
 include ApiCardParams
 include ApiCardSeeAlso
 include ApiCardSince
@@ -21,6 +22,7 @@ mixin ApiMainContent()
       )
         +ApiCardHeader(doc)
         +ApiCardDeprecated(doc)
+        +ApiCardImport(doc)
         +ApiCardFuncSigs(doc)
         +ApiCardCurried(doc)
         +ApiCardParams(doc)

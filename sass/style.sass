@@ -89,36 +89,36 @@ $category-bg-color: mix($primary, $gray-100, 15%)
   padding-left: $spacer * 0.5
   color: white
 
-#readme-container
-  margin-top: $header-height
-  padding: $spacer
-  background-color: $light-grey
+//#readme-container
+//  margin-top: $header-height
+//  padding: $spacer
+//  background-color: $light-grey
 
-#readme
-  background-color: white
-  padding: $spacer * 2
-  border: 1px solid darkgrey
-  border-radius: $border-radius
-  max-width: 80em
-
-  pre
-    padding: $spacer
-    margin-left: $spacer
-    margin-right: $spacer
-    background-color: $light-grey
-    border-radius: 4px
-
-    code
-      padding: 0
-
-  code
-    margin-bottom: 0
-    font-size: 90%
-    border-radius: 4px
-    color: #000
-    background-color: $light-grey
-    padding: 2px 4px
-
+//#readme
+//  background-color: white
+//  padding: $spacer * 2
+//  border: 1px solid darkgrey
+//  border-radius: $border-radius
+//  max-width: 80em
+//
+//  pre.example
+//    padding: $spacer
+//    margin-left: $spacer
+//    margin-right: $spacer
+//    background-color: $light-grey
+//    border-radius: 4px
+//
+//    code
+//      padding: 0
+//
+//  code
+//    margin-bottom: 0
+//    font-size: 90%
+//    border-radius: 4px
+//    color: #000
+//    background-color: $light-grey
+//    padding: 2px 4px
+//
 #content-area
   margin-top: $header-height
 
@@ -205,6 +205,11 @@ $category-bg-color: mix($primary, $gray-100, 15%)
     float: right !important
     margin-left: $spacer * .5
 
+  .copy-link
+    img
+      vertical-align: baseline
+      padding-right: $spacer * .25
+
   .description code
     @include inline-code
 
@@ -251,15 +256,20 @@ $category-bg-color: mix($primary, $gray-100, 15%)
   .hljs-number
     color: #fc9
 
-  pre,
-  .hljs
+  pre.example
+    .hljs
+      background: #333
+      color: #ccc
+
+  pre.example
     background: #333
     color: #ccc
-
-  pre
     border: 0
     margin-bottom: -$spacer
     margin-left: -$spacer
     margin-right: -$spacer
     padding: $spacer
     border-radius: 0 0 $spacer * .5 $spacer * .5
+
+  pre.import
+    border: 0

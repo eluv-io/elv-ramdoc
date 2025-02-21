@@ -8,6 +8,29 @@ mixin DocWithTopNavBar(docId)
       meta(name='viewport' content='width=device-width, initial-scale=1')
       link(rel='shortcut icon' href='./images/favicon.png')
       link(href='./css/style.css' rel='stylesheet')
+      script(src='./js/popper-core/popper.min.js')
+      script(src='./js/tippy.js/tippy.umd.js')
+      script(src='./js/clipboard/clipboard.min.js')
+      script(src='./js/ramda-fork/ramda.min.js')
+      style .tippy-box[data-theme~=material]{background-color:#505355;font-size:75%;font-weight:500;color:#FFFFFF;padding: 10px}.tippy-box[data-theme~=material][data-placement^=top]>.tippy-arrow:before{border-top-color:#505355}.tippy-box[data-theme~=material][data-placement^=bottom]>.tippy-arrow:before{border-bottom-color:#505355}.tippy-box[data-theme~=material][data-placement^=left]>.tippy-arrow:before{border-left-color:#505355}.tippy-box[data-theme~=material][data-placement^=right]>.tippy-arrow:before{border-right-color:#505355}.tippy-box[data-theme~=material]>.tippy-backdrop{background-color:#505355}.tippy-box[data-theme~=material]>.tippy-svg-arrow{fill:#505355}
+      script.
+        window.addEventListener('load', (event) => {
+          const clippy = new ClipboardJS('.copy-link');
+          const copiedMsg = tippy('.copy-link', {
+            content: 'Copied to clipboard',
+            placement: 'left',
+            theme: 'material',
+            trigger: 'manual'
+          });
+          clippy.on('success', function (e) {
+            e.trigger._tippy.show();
+            setTimeout(e.trigger._tippy.hide, 750)
+            e.clearSelection();
+          });
+          clippy.on('error', function (e) {
+            console.log(e);
+          });
+        })
       title #{name}
     body
       // ENTIRE BROWSER VIEW AREA

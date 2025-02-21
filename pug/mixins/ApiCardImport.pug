@@ -1,0 +1,11 @@
+mixin ApiCardImport(doc)
+    .import-example.d-flex.flex-row
+        a.copy-link(
+            target="_blank"
+            title='Copy to clipboard'
+            data-clipboard-target=`#${doc.name}_import`
+        )
+            img.copy-btn(
+                src='./images/copy-to-clipboard.svg'
+            )
+        pre.import: code.hljs.javascript(id=`${doc.name}_import`) !{`const ${doc.name} = require('@eluvio/elv-js-helpers/${doc.category}/${doc.name}')`}

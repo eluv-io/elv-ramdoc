@@ -414,7 +414,10 @@ exports.publish = (data, opts) => {
   // copy static assets
   _copyDir(Path.resolve(__dirname, 'images'), Path.resolve(opts.destination, 'images'))
   _copyDir(Path.resolve(__dirname, 'js'), Path.resolve(opts.destination, 'js'))
-  _copyDir(Path.resolve('./node_modules/@eluvio/ramda-fork/dist'), Path.resolve(opts.destination, 'js'))
+  _copyDir(Path.resolve(Path.join(__dirname, 'node_modules', '@eluvio', 'ramda-fork','dist')), Path.resolve(opts.destination, 'js/ramda-fork'))
+  _copyDir(Path.resolve(Path.join(__dirname, 'node_modules', '@popperjs', 'core','dist', 'umd')), Path.resolve(opts.destination, 'js/popper-core'))
+  _copyDir(Path.resolve(Path.join(__dirname, 'node_modules','clipboard','dist')), Path.resolve(opts.destination, 'js/clipboard'))
+  _copyDir(Path.resolve(Path.join(__dirname, 'node_modules','tippy.js','dist')), Path.resolve(opts.destination, 'js/tippy.js'))
   _copyDir(Path.resolve(__dirname, 'css'), Path.resolve(opts.destination, 'css'))
 
   if (_ELV_RAMDOC_DEBUG) {
