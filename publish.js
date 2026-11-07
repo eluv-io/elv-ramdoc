@@ -1,3 +1,4 @@
+'use strict'
 const _ELV_RAMDOC_DEBUG = process.env.ELV_RAMDOC_DEBUG
 
 const fs = require('fs')
@@ -82,6 +83,15 @@ const _dependencies = async (inputPath, entryPoint) => {
 const _escapeRegExp = string => string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') // $& means the whole matched string
 
 const _isDir = pathString => fs.statSync(pathString).isDirectory();
+
+const _findPkgRoot = pkgName => {
+  let testDir = Path.dirname(require.resolve(pkgName))
+  while (!fs.existsSync(Path.join(testDir, 'package.json'))) {
+    if (testDir.endsWith(pkgName)) throw Error(`package.json not found for ${pkgName} in ${testDir}`)
+    testDir = Path.dirname(testDir)
+  }
+  return testDir
+}
 
 /**
  * Converts text in [Markdown](https://www.markdownguide.org/) format to an HTML string
@@ -414,11 +424,20 @@ exports.publish = (data, opts) => {
   // copy static assets
   _copyDir(Path.resolve(__dirname, 'images'), Path.resolve(opts.destination, 'images'))
   _copyDir(Path.resolve(__dirname, 'js'), Path.resolve(opts.destination, 'js'))
-  _copyDir(Path.resolve(Path.join(__dirname, 'node_modules', '@eluvio', 'ramda-fork','dist')), Path.resolve(opts.destination, 'js/ramda-fork'))
-  _copyDir(Path.resolve(Path.join(__dirname, 'node_modules', '@popperjs', 'core','dist', 'umd')), Path.resolve(opts.destination, 'js/popper-core'))
-  _copyDir(Path.resolve(Path.join(__dirname, 'node_modules','clipboard','dist')), Path.resolve(opts.destination, 'js/clipboard'))
-  _copyDir(Path.resolve(Path.join(__dirname, 'node_modules','tippy.js','dist')), Path.resolve(opts.destination, 'js/tippy.js'))
   _copyDir(Path.resolve(__dirname, 'css'), Path.resolve(opts.destination, 'css'))
+
+  // get paths to dependencies, due to package hoisting by npm, they may not be in ./node_modules
+  const ramdaForkPkgRoot = _findPkgRoot('@eluvio/ramda-fork')
+  _copyDir(Path.resolve(Path.join(ramdaForkPkgRoot,'dist')), Path.resolve(opts.destination, 'js/ramda-fork'))
+
+  const popperCorePkgRoot = _findPkgRoot('@popperjs/core/package.json')
+  _copyDir(Path.resolve(Path.join(popperCorePkgRoot,'dist', 'umd')), Path.resolve(opts.destination, 'js/popper-core'))
+
+  const clipboardPkgRoot = _findPkgRoot('clipboard/package.json')
+  _copyDir(Path.resolve(Path.join(clipboardPkgRoot,'dist')), Path.resolve(opts.destination, 'js/clipboard'))
+
+  const tippyPkgRoot = _findPkgRoot('tippy.js/package.json')
+  _copyDir(Path.resolve(Path.join(tippyPkgRoot,'dist')), Path.resolve(opts.destination, 'js/tippy.js'))
 
   if (_ELV_RAMDOC_DEBUG) {
     console.group('raw data:')
